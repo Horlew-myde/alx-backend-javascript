@@ -1,19 +1,7 @@
-es (33 sloc)  757 Bytes
-
-// HolbertonClass Class
 export default class HolbertonClass {
-  constructor(size = '', location = '') {
+  constructor(size, location) {
     this.size = size;
     this.location = location;
-  }
-
-  [Symbol.toPrimitive](dataType) {
-    if (dataType === 'string') {
-      return (`${this.location}`);
-    } if (dataType === 'number') {
-      return (`${this.size}`);
-    }
-    return (`${this.location}`);
   }
 
   get size() {
@@ -21,20 +9,24 @@ export default class HolbertonClass {
   }
 
   set size(value) {
-    if (typeof value !== 'number') {
-      throw new TypeError('size must be a number');
-    }
     this._size = value;
   }
 
   get location() {
-    return this._code;
+    return this._location;
   }
 
   set location(value) {
-    if (typeof value !== 'string') {
-      throw new TypeError('size must be a string');
+    this._location = value;
+  }
+
+  [Symbol.toPrimitive](hint) {
+    if (hint === 'number') {
+      return this.size;
     }
-    this._code = value;
+    if (hint === 'string') {
+      return this.location;
+    }
+    return this;
   }
 }
